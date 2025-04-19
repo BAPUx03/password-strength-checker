@@ -5,7 +5,7 @@ A modern and responsive web application that allows users to check the strength 
 
 ## Live Demo
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://your-live-link.com)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://bapux03.github.io/password-strength-checker/)
 
 ---
 
