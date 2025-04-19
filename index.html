@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Password Strength Checker & Generator</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .strength {
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .weak {
+      color: #ff4d4d;
+      background: #ffe5e5;
+    }
+
+    .medium {
+      color: #ffa500;
+      background: #fff3cd;
+    }
+
+    .strong {
+      color: #28a745;
+      background: #d4edda;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #667eea;
+      color: white;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #556cd6;
+    }
+
+    .output-password {
+      margin-top: 10px;
+      font-weight: bold;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Password Strength Checker</h2>
+    <input type="password" id="passwordInput" placeholder="Enter your password" oninput="checkStrength()" />
+    <div id="strengthMessage" class="strength"></div>
+
+    <button onclick="generatePassword()">Generate Strong Password</button>
+    <div id="generatedPassword" class="output-password"></div>
+  </div>
+
+  <script>
+    function checkStrength() {
+      const password = document.getElementById("passwordInput").value;
+      const strengthMsg = document.getElementById("strengthMessage");
+
+      let strength = 0;
+
+      if (password.length >= 8) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[\W]/.test(password)) strength++;
+
+      if (password.length === 0) {
+        strengthMsg.textContent = "";
+        strengthMsg.className = "strength";
+        return;
+      }
+
+      if (strength <= 1) {
+        strengthMsg.textContent = "Weak Password";
+        strengthMsg.className = "strength weak";
+      } else if (strength === 2 || strength === 3) {
+        strengthMsg.textContent = "Medium Strength Password";
+        strengthMsg.className = "strength medium";
+      } else {
+        strengthMsg.textContent = "Strong Password";
+        strengthMsg.className = "strength strong";
+      }
+    }
+
+    function generatePassword() {
+      const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+      let password = "";
+      for (let i = 0; i < 16; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+      }
+
+      document.getElementById("generatedPassword").textContent = password;
+      document.getElementById("passwordInput").value = password;
+      checkStrength();
+    }
+  </script>
+</body>
+  </html>
